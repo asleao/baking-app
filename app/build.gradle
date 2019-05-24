@@ -30,7 +30,7 @@ ext {
     recyclerViewVersion = "1.0.0"
     legacySupportVersion = "1.0.0"
     liveDataVersion = "1.1.1"
-    javaAnnotations = "15.0"
+    javaAnnotations = "16.0.1"
     constraintLayoutVersion = "1.1.3"
     picassoVersion = "2.71828"
     exoplayerVersion = "2.10.1"
