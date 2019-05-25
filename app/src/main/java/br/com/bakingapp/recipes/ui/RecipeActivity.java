@@ -14,12 +14,12 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        RecipeFragment recipeFragment = (RecipeFragment) getSupportFragmentManager().findFragmentById(R.id.fg_recipes);
-        if (recipeFragment != null) {
+        if (savedInstanceState != null) {
             FragmentUtils.addFragmentInActivity(getSupportFragmentManager(),
-                    recipeFragment,
+                    new RecipeFragment(),
                     R.id.fg_recipes_main,
-                    "RECIPES_FRAGMENT", true);
+                    getResources().getString(R.string.recipes_main_fragment),
+                    true);
         }
     }
 }
