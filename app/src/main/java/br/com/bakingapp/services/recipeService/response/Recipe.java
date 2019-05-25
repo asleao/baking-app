@@ -32,4 +32,12 @@ public class Recipe {
         this.servings = servings;
         this.image = image;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }
