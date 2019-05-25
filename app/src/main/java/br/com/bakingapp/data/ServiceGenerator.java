@@ -12,8 +12,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
-import static android.os.Build.HOST;
-import static android.service.notification.Condition.SCHEME;
+import static br.com.bakingapp.data.Constants.HOST;
+import static br.com.bakingapp.data.Constants.SCHEME;
+
 
 public class ServiceGenerator {
 
