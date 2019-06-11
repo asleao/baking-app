@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import br.com.bakingapp.R;
 import br.com.bakingapp.recipeDetail.viewModel.RecipeMasterViewModel;
@@ -35,7 +36,14 @@ public class RecipeMasterFragment extends Fragment {
         } else {
             view = inflater.inflate(R.layout.recipe_master_fragment, container, false);
         }
+        setupFields(view);
         return view;
+    }
+
+    private void setupFields(View view) {
+        TextView ingredients = view.findViewById(R.id.tv_recipe_name);
+        String ingredientsText = requireContext().getResources().getString(R.string.ingredients);
+        ingredients.setText(ingredientsText);
     }
 
     @Override
