@@ -1,5 +1,6 @@
 package br.com.bakingapp.recipes.ui;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ import br.com.bakingapp.services.recipeService.source.RecipeRepository;
 import br.com.bakingapp.services.recipeService.source.remote.RecipeRemoteDataSource;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
+import static br.com.bakingapp.utils.ViewUtils.calculateNoOfColumns;
 
 public class RecipeFragment extends Fragment implements RecipeClickListener {
 
@@ -71,17 +74,24 @@ public class RecipeFragment extends Fragment implements RecipeClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_fragment, container, false);
+        boolean isTablet = requireContext().getResources().getBoolean(R.bool.isTablet);
+
         RecipeRepository mRecipeRepository = RecipeRepository.getInstance(RecipeRemoteDataSource.getInstance());
         mViewModel = ViewModelProviders.of(this,
                 new RecipeFactory(mRecipeRepository)).get(RecipeViewModel.class);
         mViewModel.getmRecipes().observe(getViewLifecycleOwner(), recipesObserver);
-        setupRecipes(view);
+        if (isTablet) {
+            setupRecipes(view, new GridLayoutManager(getContext(), calculateNoOfColumns(requireContext()), RecyclerView.VERTICAL, false));
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setupRecipes(view, new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        }
         return view;
     }
 
-    private void setupRecipes(View view) {
+    private void setupRecipes(View view, RecyclerView.LayoutManager layoutManager) {
         mRecipesRecyclerView = view.findViewById(R.id.rv_recipes);
-        mRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        mRecipesRecyclerView.setLayoutManager(layoutManager);
     }
 
 
