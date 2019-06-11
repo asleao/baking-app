@@ -13,27 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.bakingapp.R;
-import br.com.bakingapp.recipeDetail.viewModel.RecipeDetailViewModel;
+import br.com.bakingapp.recipeDetail.viewModel.RecipeMasterViewModel;
 
-public class RecipeDetailFragment extends Fragment {
+public class RecipeMasterFragment extends Fragment {
 
-    private RecipeDetailViewModel mViewModel;
+    private RecipeMasterViewModel mViewModel;
 
-    public static RecipeDetailFragment newInstance() {
-        return new RecipeDetailFragment();
+    public static RecipeMasterFragment newInstance() {
+        return new RecipeMasterFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recipe_detail_fragment, container, false);
+        return inflater.inflate(R.layout.recipe_master_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(RecipeDetailViewModel.class);
-
+        mViewModel = ViewModelProviders.of(this).get(RecipeMasterViewModel.class);
+        if (getArguments() != null) {
+            RecipeMasterFragmentArgs.fromBundle(getArguments());
+        }
     }
 
 }

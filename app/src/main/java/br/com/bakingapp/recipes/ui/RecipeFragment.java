@@ -87,7 +87,7 @@ public class RecipeFragment extends Fragment implements RecipeClickListener {
 
     @Override
     public void onClick(Recipe recipe) {
-        NavDirections action = RecipeFragmentDirections.actionRecipeFragmentToRecipeDetailFragment(recipe);
+        NavDirections action = RecipeFragmentDirections.actionRecipeFragmentToRecipeMasterFragment(recipe);
         findNavController(this).navigate(action);
     }
 }

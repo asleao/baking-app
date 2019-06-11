@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="16dp"
-    tools:context=".recipeDetail.ui.RecipeDetailFragment">
+    tools:context=".recipeDetail.ui.RecipeMasterFragment">
 
     <include
         android:id="@+id/cv_ingredients"
         layout="@layout/recipe_card" />
-
 
 </FrameLayout>

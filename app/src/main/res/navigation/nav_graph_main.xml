@@ -11,14 +11,14 @@
         android:label="Recipes"
         tools:layout="@layout/recipe_fragment" >
         <action
-            android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
+            android:id="@+id/action_recipeFragment_to_recipeMasterFragment"
+            app:destination="@id/recipeMasterFragment" />
     </fragment>
     <fragment
-        android:id="@+id/recipeDetailFragment"
-        android:name="br.com.bakingapp.recipeDetail.ui.RecipeDetailFragment"
-        android:label="Recipes Detail"
-        tools:layout="@layout/recipe_detail_fragment" >
+        android:id="@+id/recipeMasterFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeMasterFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/recipe_master_fragment" >
         <argument
             android:name="recipe"
             app:argType="br.com.bakingapp.services.recipeService.response.Recipe" />
