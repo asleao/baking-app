@@ -26,7 +26,7 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fg_recipes_navhost);
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
 
         appBarConfiguration = new AppBarConfiguration.
                 Builder(navController.getGraph()).
