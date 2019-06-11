@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,8 @@ import br.com.bakingapp.recipes.viewmodel.factories.RecipeFactory;
 import br.com.bakingapp.services.recipeService.response.Recipe;
 import br.com.bakingapp.services.recipeService.source.RecipeRepository;
 import br.com.bakingapp.services.recipeService.source.remote.RecipeRemoteDataSource;
+
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 public class RecipeFragment extends Fragment implements RecipeClickListener {
 
@@ -84,6 +87,7 @@ public class RecipeFragment extends Fragment implements RecipeClickListener {
 
     @Override
     public void onClick(Recipe recipe) {
-
+        NavDirections action = RecipeFragmentDirections.actionRecipeFragmentToRecipeDetailFragment(recipe);
+        findNavController(this).navigate(action);
     }
 }

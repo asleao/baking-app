@@ -1,10 +1,14 @@
 package br.com.bakingapp.services.recipeService.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.squareup.moshi.Json;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Parcelable {
     @Json(name = "id")
     private final int id;
 
@@ -12,10 +16,10 @@ public class Recipe {
     private final String name;
 
     @Json(name = "ingredients")
-    private final List<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
     @Json(name = "steps")
-    private final List<Step> steps;
+    private List<Step> steps;
 
 
     @Json(name = "servings")
@@ -40,4 +44,46 @@ public class Recipe {
     public String getImage() {
         return image;
     }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public Recipe(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        in.readList(this.getIngredients(), Ingredient.class.getClassLoader());
+        in.readList(this.getSteps(), Step.class.getClassLoader());
+        this.servings = in.readString();
+        this.image = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(this.id);
+        parcel.writeString(this.name);
+        parcel.writeList(this.ingredients);
+        parcel.writeList(this.steps);
+        parcel.writeString(this.servings);
+        parcel.writeString(this.image);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }
