@@ -2,6 +2,7 @@ package br.com.bakingapp.recipeDetail.ui;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,15 @@ public class RecipeMasterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recipe_master_fragment, container, false);
+        boolean isTablet = requireContext().getResources().getBoolean(R.bool.isTablet);
+        View view;
+        if (isTablet) {
+            view = inflater.inflate(R.layout.recipe_master_fragment_land, container, false);
+            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            view = inflater.inflate(R.layout.recipe_master_fragment, container, false);
+        }
+        return view;
     }
 
     @Override
