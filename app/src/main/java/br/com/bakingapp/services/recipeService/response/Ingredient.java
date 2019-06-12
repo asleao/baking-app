@@ -24,6 +24,18 @@ public class Ingredient implements Parcelable {
         this.ingredient = ingredient;
     }
 
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public String getMeasure() {
+        return measure;
+    }
+
+    public String getIngredient() {
+        return ingredient;
+    }
+
     protected Ingredient(Parcel in) {
         measure = in.readString();
         ingredient = in.readString();

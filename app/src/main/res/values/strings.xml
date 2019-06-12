@@ -3,4 +3,5 @@
     <string name="recipe_name">Recipe name</string>
     <string name="ingredients">Ingredients</string>
     <string name="ingredients_arg">ingredients</string>
+    <string name="no_recipe">No recipe selected.</string>
 </resources>
