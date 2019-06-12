@@ -13,26 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.bakingapp.R;
-import br.com.bakingapp.recipeDetail.viewModel.RecipeDetailViewModel;
+import br.com.bakingapp.recipeDetail.viewModel.RecipeIngredientsViewModel;
 
-public class RecipeDetailFragment extends Fragment {
+public class RecipeIngredientsFragment extends Fragment {
 
-    private RecipeDetailViewModel mViewModel;
+    private RecipeIngredientsViewModel mViewModel;
 
-    public static RecipeDetailFragment newInstance() {
-        return new RecipeDetailFragment();
+    public static RecipeIngredientsFragment newInstance() {
+        return new RecipeIngredientsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recipe_detail_fragment, container, false);
+        return inflater.inflate(R.layout.recipe_ingredients_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(RecipeDetailViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(RecipeIngredientsViewModel.class);
 
     }
 
