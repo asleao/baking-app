@@ -8,5 +8,9 @@
         android:id="@+id/recipeIngredientsFragment"
         android:name="br.com.bakingapp.recipeDetail.ui.RecipeIngredientsFragment"
         android:label="recipe_ingredients_fragment"
-        tools:layout="@layout/recipe_ingredients_fragment" />
+        tools:layout="@layout/recipe_ingredients_fragment" >
+        <argument
+            android:name="ingredients"
+            app:argType="br.com.bakingapp.services.recipeService.response.Ingredients" />
+    </fragment>
 </navigation>

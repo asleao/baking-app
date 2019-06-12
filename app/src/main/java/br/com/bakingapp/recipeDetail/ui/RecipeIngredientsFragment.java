@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import br.com.bakingapp.R;
 import br.com.bakingapp.recipeDetail.viewModel.RecipeIngredientsViewModel;
+import br.com.bakingapp.services.recipeService.response.Ingredients;
 
 public class RecipeIngredientsFragment extends Fragment {
 
@@ -26,6 +27,7 @@ public class RecipeIngredientsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        setupData();
         return inflater.inflate(R.layout.recipe_ingredients_fragment, container, false);
     }
 
@@ -34,6 +36,13 @@ public class RecipeIngredientsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(RecipeIngredientsViewModel.class);
 
+    }
+
+    private void setupData() {
+        if (getArguments() != null) {
+            RecipeIngredientsFragmentArgs args = RecipeIngredientsFragmentArgs.fromBundle(getArguments());
+            args.getIngredients();
+        }
     }
 
 }

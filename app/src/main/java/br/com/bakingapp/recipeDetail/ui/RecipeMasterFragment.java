@@ -35,16 +35,41 @@ public class RecipeMasterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        setupData();
         boolean isTablet = requireContext().getResources().getBoolean(R.bool.isTablet);
         View view;
         if (isTablet) {
             view = inflater.inflate(R.layout.recipe_master_fragment_land, container, false);
-            requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setupFields(view);
+            setupMasterDetailLayout();
 
         } else {
             view = inflater.inflate(R.layout.recipe_master_fragment, container, false);
+            setupFields(view);
+            setupSingleLayout();
         }
-        setupFields(view);
+        mViewModel = ViewModelProviders.of(this).get(RecipeMasterViewModel.class);
+
+        return view;
+    }
+
+    private void setupMasterDetailLayout() {
+        final NavHostFragment navHostFragment =
+                (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.fg_nav_container);
+        requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        ingredientsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(requireContext().
+                        getResources()
+                        .getString(R.string.ingredients_arg), ingredients);
+                navHostFragment.getNavController().navigate(R.id.recipeIngredientsFragment, bundle);
+            }
+        });
+    }
+
+    private void setupSingleLayout() {
         ingredientsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +77,6 @@ public class RecipeMasterFragment extends Fragment {
                 findNavController(RecipeMasterFragment.this).navigate(action);
             }
         });
-        return view;
     }
 
     private void setupFields(View view) {
@@ -61,10 +85,7 @@ public class RecipeMasterFragment extends Fragment {
         ingredientsTextView.setText(ingredientsText);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(RecipeMasterViewModel.class);
+    private void setupData() {
         if (getArguments() != null) {
             RecipeMasterFragmentArgs args = RecipeMasterFragmentArgs.fromBundle(getArguments());
             recipe = args.getRecipe();
