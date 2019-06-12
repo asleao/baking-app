@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import br.com.bakingapp.R;
 import br.com.bakingapp.recipeDetail.viewModel.RecipeMasterViewModel;
@@ -39,6 +40,7 @@ public class RecipeMasterFragment extends Fragment {
         if (isTablet) {
             view = inflater.inflate(R.layout.recipe_master_fragment_land, container, false);
             requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         } else {
             view = inflater.inflate(R.layout.recipe_master_fragment, container, false);
         }
