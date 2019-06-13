@@ -13,4 +13,13 @@
             android:name="ingredients"
             app:argType="br.com.bakingapp.services.recipeService.response.Ingredients" />
     </fragment>
+    <fragment
+        android:id="@+id/recipeStepFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeStepFragment"
+        android:label="RecipeStepFragment"
+        tools:layout="@layout/recipe_step_fragment">
+        <argument
+            android:name="step"
+            app:argType="br.com.bakingapp.services.recipeService.response.Step" />
+    </fragment>
 </navigation>

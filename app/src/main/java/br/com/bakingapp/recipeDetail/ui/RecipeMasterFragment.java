@@ -75,6 +75,16 @@ public class RecipeMasterFragment extends Fragment {
                 navHostFragment.getNavController().navigate(R.id.recipeIngredientsFragment, bundle);
             }
         });
+        mStepsRecyclerView.setAdapter(new StepsAdapter(steps, new StepClickListener() {
+            @Override
+            public void onClick(Step step) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(requireContext().
+                        getResources()
+                        .getString(R.string.step_arg), step);
+                navHostFragment.getNavController().navigate(R.id.recipeStepFragment, bundle);
+            }
+        }));
     }
 
     private void setupSingleLayout() {
@@ -85,6 +95,13 @@ public class RecipeMasterFragment extends Fragment {
                 findNavController(RecipeMasterFragment.this).navigate(action);
             }
         });
+        mStepsRecyclerView.setAdapter(new StepsAdapter(steps, new StepClickListener() {
+            @Override
+            public void onClick(Step step) {
+                NavDirections action = RecipeMasterFragmentDirections.actionRecipeMasterFragmentToRecipeStepFragment(step);
+                findNavController(RecipeMasterFragment.this).navigate(action);
+            }
+        }));
     }
 
     private void setupFields(View view) {
@@ -93,12 +110,6 @@ public class RecipeMasterFragment extends Fragment {
         ingredientsTextView.setText(ingredientsText);
         mStepsRecyclerView = view.findViewById(R.id.rv_steps);
         mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-        mStepsRecyclerView.setAdapter(new StepsAdapter(steps, new StepClickListener() {
-            @Override
-            public void onClick(Step step) {
-                step.getShortDescription();
-            }
-        }));
 
     }
 
