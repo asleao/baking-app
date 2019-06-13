@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main_tablet"
+    app:startDestination="@id/recipeIngredientsFragment">
+    <fragment
+        android:id="@+id/recipeIngredientsFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeIngredientsFragment"
+        android:label="recipe_ingredients_fragment"
+        tools:layout="@layout/recipe_ingredients_fragment" >
+        <argument
+            android:name="ingredients"
+            app:argType="br.com.bakingapp.services.recipeService.response.Ingredients" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeStepFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeStepFragment"
+        android:label="RecipeStepFragment"
+        tools:layout="@layout/recipe_step_fragment">
+        <argument
+            android:name="step"
+            app:argType="br.com.bakingapp.services.recipeService.response.Step" />
+    </fragment>
+</navigation>

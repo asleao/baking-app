@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/recipeFragment">
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="br.com.bakingapp.recipes.ui.RecipeFragment"
+        android:label="Recipes"
+        tools:layout="@layout/recipe_fragment" >
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeMasterFragment"
+            app:destination="@id/recipeMasterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeMasterFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeMasterFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/recipe_master_fragment" >
+        <argument
+            android:name="recipe"
+            app:argType="br.com.bakingapp.services.recipeService.response.Recipe" />
+        <action
+            android:id="@+id/action_recipeMasterFragment_to_recipeIngredientsFragment"
+            app:destination="@id/recipeIngredientsFragment" />
+        <action
+            android:id="@+id/action_recipeMasterFragment_to_recipeStepFragment"
+            app:destination="@id/recipeStepFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/recipeIngredientsFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeIngredientsFragment"
+        android:label="Ingredients"
+        tools:layout="@layout/recipe_ingredients_fragment" >
+        <argument
+            android:name="ingredients"
+            app:argType="br.com.bakingapp.services.recipeService.response.Ingredients" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeStepFragment"
+        android:name="br.com.bakingapp.recipeDetail.ui.RecipeStepFragment"
+        android:label="RecipeStepFragment"
+        tools:layout="@layout/recipe_step_fragment">
+        <argument
+            android:name="step"
+            app:argType="br.com.bakingapp.services.recipeService.response.Step" />
+    </fragment>
+</navigation>

@@ -3,6 +3,7 @@
 buildscript {
     ext {
         gradlePluginVersion = "3.4.1"
+        safeArgsVersion = "2.0.0"
     }
     repositories {
         google()
@@ -10,6 +11,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradlePluginVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$safeArgsVersion"
     }
 }
 
