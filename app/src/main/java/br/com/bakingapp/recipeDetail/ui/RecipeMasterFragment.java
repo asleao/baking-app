@@ -13,11 +13,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.bakingapp.R;
+import br.com.bakingapp.recipeDetail.adapters.StepClickListener;
+import br.com.bakingapp.recipeDetail.adapters.StepsAdapter;
 import br.com.bakingapp.recipeDetail.viewModel.RecipeMasterViewModel;
 import br.com.bakingapp.services.recipeService.response.Ingredients;
 import br.com.bakingapp.services.recipeService.response.Recipe;
+import br.com.bakingapp.services.recipeService.response.Step;
+import br.com.bakingapp.services.recipeService.response.Steps;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
@@ -27,6 +33,8 @@ public class RecipeMasterFragment extends Fragment {
     private TextView ingredientsTextView;
     private Recipe recipe;
     private Ingredients ingredients;
+    private Steps steps;
+    private RecyclerView mStepsRecyclerView;
 
     public static RecipeMasterFragment newInstance() {
         return new RecipeMasterFragment();
@@ -83,6 +91,15 @@ public class RecipeMasterFragment extends Fragment {
         ingredientsTextView = view.findViewById(R.id.tv_recipe_name);
         String ingredientsText = requireContext().getResources().getString(R.string.ingredients);
         ingredientsTextView.setText(ingredientsText);
+        mStepsRecyclerView = view.findViewById(R.id.rv_steps);
+        mStepsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+        mStepsRecyclerView.setAdapter(new StepsAdapter(steps, new StepClickListener() {
+            @Override
+            public void onClick(Step step) {
+                step.getShortDescription();
+            }
+        }));
+
     }
 
     private void setupData() {
@@ -90,6 +107,7 @@ public class RecipeMasterFragment extends Fragment {
             RecipeMasterFragmentArgs args = RecipeMasterFragmentArgs.fromBundle(getArguments());
             recipe = args.getRecipe();
             ingredients = new Ingredients(recipe.getIngredients());
+            steps = new Steps(recipe.getSteps());
         }
     }
 
