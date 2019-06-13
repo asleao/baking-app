@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import br.com.bakingapp.R;
+import br.com.bakingapp.services.recipeService.source.RecipeRepository;
+import br.com.bakingapp.services.recipeService.source.remote.RecipeRemoteDataSource;
 
 import static androidx.navigation.ui.NavigationUI.onNavDestinationSelected;
 import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavController;
@@ -46,5 +48,12 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RecipeRepository.destroyInstance();
+        RecipeRemoteDataSource.destroyInstance();
     }
 }
