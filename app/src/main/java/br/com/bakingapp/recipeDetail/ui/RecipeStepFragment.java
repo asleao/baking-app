@@ -96,6 +96,12 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        releasePlayer();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
