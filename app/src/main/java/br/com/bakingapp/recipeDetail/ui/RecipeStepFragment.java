@@ -24,7 +24,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import java.io.IOException;
-import java.util.EventListener;
 
 import br.com.bakingapp.R;
 import br.com.bakingapp.recipeDetail.viewModel.RecipeStepViewModel;
@@ -71,6 +70,7 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
             mPlayer.setPlayWhenReady(true);
         }
     }
+
     private void releasePlayer() {
         mPlayer.stop();
         mPlayer.release();
@@ -96,14 +96,8 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        releasePlayer();
-    }
-
-    @Override
     public void onDestroy() {
-        super.onDestroy();
         releasePlayer();
+        super.onDestroy();
     }
 }
