@@ -71,6 +71,11 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
             mPlayer.setPlayWhenReady(true);
         }
     }
+    private void releasePlayer() {
+        mPlayer.stop();
+        mPlayer.release();
+        mPlayer = null;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -88,5 +93,11 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     @Override
     public void onLoadError(IOException error) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        releasePlayer();
     }
 }
