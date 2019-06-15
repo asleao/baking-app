@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +37,7 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     private Step step;
     private PlayerView mPlayerView;
     private SimpleExoPlayer mPlayer;
+    private TextView mStepDescription;
 
 
     public static RecipeStepFragment newInstance() {
@@ -52,7 +55,16 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
 
     private void setupFields(View view) {
         mPlayerView = view.findViewById(R.id.pv_recipe_step);
-        initializePlayer(Uri.parse(step.getVideoURL()));
+        if (!step.getVideoURL().isEmpty() || !step.getThumbnailURL().isEmpty()) {
+            mPlayerView.setVisibility(View.VISIBLE);
+            if (step.getVideoURL().isEmpty()) {
+                initializePlayer(Uri.parse(step.getThumbnailURL()));
+            } else {
+                initializePlayer(Uri.parse(step.getVideoURL()));
+            }
+        }
+        mStepDescription = view.findViewById(R.id.tv_step_description);
+        mStepDescription.setText(step.getDescription());
     }
 
     private void initializePlayer(Uri mediaUrl) {
@@ -72,9 +84,11 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void releasePlayer() {
-        mPlayer.stop();
-        mPlayer.release();
-        mPlayer = null;
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 
     @Override
@@ -92,7 +106,7 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
 
     @Override
     public void onLoadError(IOException error) {
-
+        Toast.makeText(requireContext(), getResources().getString(R.string.video_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override
