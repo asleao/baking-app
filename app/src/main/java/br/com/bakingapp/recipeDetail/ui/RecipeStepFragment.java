@@ -54,20 +54,20 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void setupFields(View view) {
-        if (shouldDisplayStepVideo()) {
-            setupStepVideo(view);
-        }
+        mPlayerView = view.findViewById(R.id.pv_recipe_step);
         mStepDescription = view.findViewById(R.id.tv_step_description);
         mStepDescription.setText(step.getDescription());
+        setupStepVideo();
     }
 
-    private void setupStepVideo(View view) {
-        mPlayerView = view.findViewById(R.id.pv_recipe_step);
-        mPlayerView.setVisibility(View.VISIBLE);
-        if (step.getVideoURL().isEmpty()) {
-            initializePlayer(Uri.parse(step.getThumbnailURL()));
-        } else {
-            initializePlayer(Uri.parse(step.getVideoURL()));
+    private void setupStepVideo() {
+        if (shouldDisplayStepVideo()) {
+            mPlayerView.setVisibility(View.VISIBLE);
+            if (step.getVideoURL().isEmpty()) {
+                initializePlayer(Uri.parse(step.getThumbnailURL()));
+            } else {
+                initializePlayer(Uri.parse(step.getVideoURL()));
+            }
         }
     }
 
@@ -115,6 +115,26 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     @Override
     public void onLoadError(IOException error) {
         Toast.makeText(requireContext(), getResources().getString(R.string.video_error), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mPlayer == null) {
+            setupStepVideo();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        releasePlayer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releasePlayer();
     }
 
     @Override
