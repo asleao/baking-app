@@ -54,17 +54,25 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void setupFields(View view) {
-        mPlayerView = view.findViewById(R.id.pv_recipe_step);
-        if (!step.getVideoURL().isEmpty() || !step.getThumbnailURL().isEmpty()) {
-            mPlayerView.setVisibility(View.VISIBLE);
-            if (step.getVideoURL().isEmpty()) {
-                initializePlayer(Uri.parse(step.getThumbnailURL()));
-            } else {
-                initializePlayer(Uri.parse(step.getVideoURL()));
-            }
+        if (shouldDisplayStepVideo()) {
+            setupStepVideo(view);
         }
         mStepDescription = view.findViewById(R.id.tv_step_description);
         mStepDescription.setText(step.getDescription());
+    }
+
+    private void setupStepVideo(View view) {
+        mPlayerView = view.findViewById(R.id.pv_recipe_step);
+        mPlayerView.setVisibility(View.VISIBLE);
+        if (step.getVideoURL().isEmpty()) {
+            initializePlayer(Uri.parse(step.getThumbnailURL()));
+        } else {
+            initializePlayer(Uri.parse(step.getVideoURL()));
+        }
+    }
+
+    private boolean shouldDisplayStepVideo() {
+        return !step.getVideoURL().isEmpty() || !step.getThumbnailURL().isEmpty();
     }
 
     private void initializePlayer(Uri mediaUrl) {
