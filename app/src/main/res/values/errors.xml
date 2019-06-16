@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="video_error">An error has occured while playing the video. Please try again in a few seconds. :)</string>
+</resources>
