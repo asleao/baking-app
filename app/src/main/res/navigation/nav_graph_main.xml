@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/recipeStepFragment"
         android:name="br.com.bakingapp.recipeDetail.ui.RecipeStepFragment"
-        android:label="RecipeStepFragment"
+        android:label="Step Details"
         tools:layout="@layout/recipe_step_fragment">
         <argument
             android:name="step"
