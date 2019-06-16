@@ -5,4 +5,6 @@
     <string name="ingredients_arg">ingredients</string>
     <string name="step_arg">step</string>
     <string name="no_recipe">No recipe selected.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
