@@ -37,7 +37,6 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     private Step step;
     private PlayerView mPlayerView;
     private SimpleExoPlayer mPlayer;
-    private TextView mStepDescription;
 
 
     public static RecipeStepFragment newInstance() {
@@ -50,14 +49,14 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
         View view = inflater.inflate(R.layout.recipe_step_fragment, container, false);
         setupData();
         setupFields(view);
+        setupStepVideo();
         return view;
     }
 
     private void setupFields(View view) {
         mPlayerView = view.findViewById(R.id.pv_recipe_step);
-        mStepDescription = view.findViewById(R.id.tv_step_description);
+        TextView mStepDescription = view.findViewById(R.id.tv_step_description);
         mStepDescription.setText(step.getDescription());
-        setupStepVideo();
     }
 
     private void setupStepVideo() {
@@ -120,21 +119,19 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     @Override
     public void onResume() {
         super.onResume();
-        if (mPlayer == null) {
-            setupStepVideo();
+        if (mPlayer != null) {
+            mPlayer.seekTo(mViewModel.getPlayerPosition());
+            mPlayer.setPlayWhenReady(true);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        releasePlayer();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        releasePlayer();
+        if (mPlayer != null) {
+            mViewModel.setPlayerPosition(mPlayer.getContentPosition());
+            mPlayer.setPlayWhenReady(!mPlayer.getPlayWhenReady());
+        }
     }
 
     @Override
