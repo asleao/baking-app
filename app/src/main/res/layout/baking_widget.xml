@@ -6,13 +6,16 @@
 
     <TextView
         android:id="@+id/tv_widget_label"
-        style="@style/HeaderTheme"
+        style="@style/Body2Theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSecondary"
         android:gravity="center"
+        android:textColor="@color/onSecondary"
         tools:text="@string/recipe_name" />
 
     <ListView
+        android:id="@+id/lv_ingredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_widget_label">

@@ -1,0 +1,74 @@
+package br.com.bakingapp.widget;
+
+import android.content.Context;
+import android.content.Intent;
+import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.bakingapp.R;
+import br.com.bakingapp.services.recipeService.response.Ingredient;
+
+public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsFactory {
+    private Context mContext;
+    private List<Ingredient> mIngredients;
+
+    public IngredientFactoryAdapter(Context mContext, Intent intent) {
+        this.mContext = mContext;
+        mIngredients = new ArrayList<>(1);
+        mIngredients.add(new Ingredient(BigDecimal.ONE, "TSP", "Coffe"));
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onDataSetChanged() {
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public int getCount() {
+        return mIngredients.size();
+    }
+
+    @Override
+    public RemoteViews getViewAt(int position) {
+        Ingredient ingredient = mIngredients.get(position);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.item_ingredient);
+        views.setTextViewText(R.id.tv_ingredient_name, ingredient.getIngredient());
+        views.setTextViewText(R.id.tv_ingredient_mesure, ingredient.getMeasure());
+        views.setTextViewText(R.id.tv_ingredient_quantity, ingredient.getQuantity().toString());
+
+        return views;
+    }
+
+    @Override
+    public RemoteViews getLoadingView() {
+        return null;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+}
