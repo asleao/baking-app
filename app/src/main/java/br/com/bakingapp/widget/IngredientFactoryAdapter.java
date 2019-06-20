@@ -39,6 +39,8 @@ public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsF
 
     @Override
     public int getCount() {
+        if (mIngredients == null)
+            return 0;
         return mIngredients.size();
     }
 
@@ -67,7 +69,7 @@ public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsF
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
