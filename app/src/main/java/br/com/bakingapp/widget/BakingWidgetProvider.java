@@ -1,39 +1,48 @@
 package br.com.bakingapp.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import br.com.bakingapp.R;
+import java.util.List;
 
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
+import br.com.bakingapp.R;
+import br.com.bakingapp.services.recipeService.response.Ingredient;
+import br.com.bakingapp.services.recipeService.response.Recipe;
+
+import static br.com.bakingapp.widget.Constants.RECIPE_INTENT;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class BakingWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static List<Ingredient> cachedIngredients;
 
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget);
-        Intent intent = new Intent(context, IngredientWidgetService.class);
-        intent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_widget);
-        remoteViews.setRemoteAdapter(R.id.lv_ingredients, intent);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int[] appWidgetIds, Recipe recipe) {
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_widget);
+            Intent intent = new Intent(context, IngredientWidgetService.class);
+            remoteViews.setRemoteAdapter(R.id.lv_ingredients, intent);
+            if (recipe != null) {
+                cachedIngredients = recipe.getIngredients();
+                remoteViews.setTextViewText(R.id.tv_widget_label, recipe.getName());
+            }
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.lv_ingredients);
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -46,8 +55,11 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    public static void sendBroadcast(Context context) {
+    public static void sendBroadcast(Context context, Recipe recipe) {
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RECIPE_INTENT, recipe);
+        intent.putExtras(bundle);
         intent.setComponent(new ComponentName(context, BakingWidgetProvider.class));
         context.sendBroadcast(intent);
     }
@@ -55,13 +67,17 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(final Context context, Intent intent) {
         final String action = intent.getAction();
-        if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-            AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-            ComponentName cn = new ComponentName(context, BakingWidgetProvider.class);
-            mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.lv_ingredients);
+        if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            Recipe recipe = intent.getParcelableExtra(RECIPE_INTENT);
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingWidgetProvider.class));
+            BakingWidgetProvider.updateAppWidget(context, appWidgetManager, appWidgetIds, recipe);
+            super.onReceive(context, intent);
         }
-        super.onReceive(context, intent);
     }
 
+    public static List<Ingredient> getCachedIngredients() {
+        return cachedIngredients;
+    }
 }
 

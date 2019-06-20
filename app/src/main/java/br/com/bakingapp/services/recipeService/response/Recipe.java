@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.squareup.moshi.Json;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe implements Parcelable {
@@ -61,8 +60,8 @@ public class Recipe implements Parcelable {
     public Recipe(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();
-        in.readList(this.getIngredients(), Ingredient.class.getClassLoader());
-        in.readList(this.getSteps(), Step.class.getClassLoader());
+        this.ingredients = in.readArrayList(Ingredient.class.getClassLoader());
+        this.steps = in.readArrayList(Step.class.getClassLoader());
         this.servings = in.readString();
         this.image = in.readString();
     }

@@ -8,4 +8,5 @@ public class IngredientWidgetService extends RemoteViewsService {
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new IngredientFactoryAdapter(this, intent);
     }
+
 }

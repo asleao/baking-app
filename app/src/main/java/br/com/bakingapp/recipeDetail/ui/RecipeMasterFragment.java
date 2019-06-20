@@ -24,6 +24,7 @@ import br.com.bakingapp.services.recipeService.response.Ingredients;
 import br.com.bakingapp.services.recipeService.response.Recipe;
 import br.com.bakingapp.services.recipeService.response.Step;
 import br.com.bakingapp.services.recipeService.response.Steps;
+import br.com.bakingapp.services.recipeService.source.RecipeRepository;
 import br.com.bakingapp.widget.BakingWidgetProvider;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
@@ -120,7 +121,7 @@ public class RecipeMasterFragment extends Fragment {
             recipe = args.getRecipe();
             ingredients = new Ingredients(recipe.getIngredients());
             steps = new Steps(recipe.getSteps());
-            BakingWidgetProvider.sendBroadcast(requireContext());
+            BakingWidgetProvider.sendBroadcast(requireContext(), recipe);
         }
     }
 
