@@ -73,7 +73,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         if (action != null && action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             Recipe recipe = intent.getParcelableExtra(RECIPE_INTENT);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingWidgetProvider.class));
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(intent.getComponent());
             BakingWidgetProvider.updateIngredientWidgets(context, appWidgetManager, appWidgetIds, recipe);
             super.onReceive(context, intent);
         }
