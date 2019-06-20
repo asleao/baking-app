@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,26 +18,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.com.bakingapp.R;
 import br.com.bakingapp.recipeDetail.adapters.StepClickListener;
 import br.com.bakingapp.recipeDetail.adapters.StepsAdapter;
-import br.com.bakingapp.recipeDetail.viewModel.RecipeMasterViewModel;
 import br.com.bakingapp.services.recipeService.response.Ingredients;
 import br.com.bakingapp.services.recipeService.response.Recipe;
 import br.com.bakingapp.services.recipeService.response.Step;
 import br.com.bakingapp.services.recipeService.response.Steps;
+import br.com.bakingapp.widget.BakingWidgetProvider;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 public class RecipeMasterFragment extends Fragment {
 
-    private RecipeMasterViewModel mViewModel;
     private TextView ingredientsTextView;
-    private Recipe recipe;
     private Ingredients ingredients;
     private Steps steps;
     private RecyclerView mStepsRecyclerView;
 
-    public static RecipeMasterFragment newInstance() {
-        return new RecipeMasterFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,7 +50,6 @@ public class RecipeMasterFragment extends Fragment {
             setupFields(view);
             setupSingleLayout();
         }
-        mViewModel = ViewModelProviders.of(this).get(RecipeMasterViewModel.class);
 
         return view;
     }
@@ -116,9 +109,10 @@ public class RecipeMasterFragment extends Fragment {
     private void setupData() {
         if (getArguments() != null) {
             RecipeMasterFragmentArgs args = RecipeMasterFragmentArgs.fromBundle(getArguments());
-            recipe = args.getRecipe();
+            Recipe recipe = args.getRecipe();
             ingredients = new Ingredients(recipe.getIngredients());
             steps = new Steps(recipe.getSteps());
+            BakingWidgetProvider.sendBroadcast(requireContext(), recipe);
         }
     }
 

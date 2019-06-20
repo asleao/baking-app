@@ -33,13 +33,8 @@ import static br.com.bakingapp.utils.ViewUtils.calculateNoOfColumns;
 
 public class RecipeFragment extends Fragment implements RecipeClickListener {
 
-    private RecipeViewModel mViewModel;
     private Observer<Resource<List<Recipe>>> recipesObserver;
     private RecyclerView mRecipesRecyclerView;
-
-    public static RecipeFragment newInstance() {
-        return new RecipeFragment();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +72,7 @@ public class RecipeFragment extends Fragment implements RecipeClickListener {
         boolean isTablet = requireContext().getResources().getBoolean(R.bool.isTablet);
 
         RecipeRepository mRecipeRepository = RecipeRepository.getInstance(RecipeRemoteDataSource.getInstance());
-        mViewModel = ViewModelProviders.of(this,
+        RecipeViewModel mViewModel = ViewModelProviders.of(this,
                 new RecipeFactory(mRecipeRepository)).get(RecipeViewModel.class);
         mViewModel.getmRecipes().observe(getViewLifecycleOwner(), recipesObserver);
         if (isTablet) {
