@@ -38,11 +38,6 @@ public class RecipeStepFragment extends Fragment implements ExtractorMediaSource
     private PlayerView mPlayerView;
     private SimpleExoPlayer mPlayer;
 
-
-    public static RecipeStepFragment newInstance() {
-        return new RecipeStepFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
