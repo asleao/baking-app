@@ -17,7 +17,7 @@ public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsF
     private Context mContext;
     private List<Ingredient> mIngredients;
 
-    public IngredientFactoryAdapter(Context mContext, Intent intent) {
+    IngredientFactoryAdapter(Context mContext, Intent intent) {
         this.mContext = mContext;
         mIngredients = getCachedIngredients();
     }
@@ -47,12 +47,8 @@ public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsF
     @Override
     public RemoteViews getViewAt(int position) {
         Ingredient ingredient = mIngredients.get(position);
-        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.item_ingredient);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.item_ingredient_widget);
         views.setTextViewText(R.id.tv_ingredient_name, ingredient.getIngredient());
-        views.setTextViewText(R.id.tv_ingredient_mesure, ingredient.getMeasure());
-        if (ingredient.getQuantity() != null) {
-            views.setTextViewText(R.id.tv_ingredient_quantity, ingredient.getQuantity().toString());
-        }
 
         return views;
     }
