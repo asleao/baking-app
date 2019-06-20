@@ -17,7 +17,7 @@ public class IngredientFactoryAdapter implements RemoteViewsService.RemoteViewsF
     private Context mContext;
     private List<Ingredient> mIngredients;
 
-    IngredientFactoryAdapter(Context mContext, Intent intent) {
+    IngredientFactoryAdapter(Context mContext) {
         this.mContext = mContext;
         mIngredients = getCachedIngredients();
     }
